@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="js/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="css/colorbrewer.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav id="navigationBar">
+        <a href="http://127.0.0.1/" class="nav-link">Information TP</a>
+        <a href="http://127.0.0.1/france_prestations.html" class="nav-link">Geo-Répartition Prestations</a>
+        <a href="http://127.0.0.1/france_clients.html" class="nav-link">Geo-Répartition Clients</a>
+        <a href="http://127.0.0.1/cf_time.html" class="nav-link">Chiffres d'Affaires Mois/Années</a>
+        <a href="http://127.0.0.1/sales_time.html" class="nav-link">Ventes Jours de Semaine /Heur du Jour</a>
+        <a href="http://127.0.0.1/prestation.html" class="nav-link">Prestations Trie</a>
+        <a href="http://127.0.0.1/prestation_bar.html" class="nav-link">Ventes Catégorie de Prestation</a>
+    </nav>
+    <!-- Create a div where the graph will take place -->
+    <div id="my_dataviz"></div>
+    <div id="best_sellers"></div>
+</body>
+
+<script>
+    // inspired by https://d3-graph-gallery.com/graph/barplot_basic.html
+    // set the dimensions and margins of the graph
+    const margin = { top: 150, right: 30, bottom: 100, left: 60 },
+        width = 460,
+        height = 400;
+
+    // append the svg object to the body of the page
+    const svg = d3.select("#my_dataviz")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Parse the Data
+    //d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv").then( function(data) {
+    d3.json("http://127.0.0.1:4000/?query={prestations{id description sum count avg}}").then(function (root) {
+        let data = root.data.prestations
+        console.log(data);
+        const maxCountObject = data.reduce((max, obj) => (obj.count > max.count ? obj : max), data[0]);
+        // X axis
+        const x = d3.scaleBand()
+            .range([0, width])
+            .domain(data.map(d => d.description))
+            .padding(0.2);
+
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("transform", "translate(-10,0)rotate(-45)")
+            .style("text-anchor", "end");
+
+        // Add Y axis
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, e => e.count)])
+            .range([height, 0]);
+        svg.append("g")
+            .call(d3.axisLeft(y));
+
+        // Bars
+        svg.selectAll("mybar")
+            .data(data)
+            .join("rect")
+            .attr("x", d => x(d.description))
+            .attr("y", d => y(d.count))
+            .attr("width", x.bandwidth())
+            .attr("height", d => height - y(d.count))
+            .attr("fill", "#69b3a2")
+
+        svg.append("text")
+            .attr("x", width / 2)
+            .attr("y", 0 - (margin.top / 2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "18px")
+            .style("text-decoration", "underline")
+            .text("Ventes par Catégorie de Prestation");
+
+        var cf = d3.select("#best_sellers")
+            .html("<b>Le Type de Prestations le Plus Demander</b>")
+            .style("width", "380px")
+            .style("height", "60px")
+            .style("opacity", 0.7)
+            .style("background-color", "#838383")
+            .style("position", "relative")
+            .style("left", "48%")
+            .style("top", "60%")
+            .style("transform", "translate(-50%, -50%)")
+            .style("opacity", 0.5)
+            .style("border-radius", "10px")
+            .style("margin-top", "65px")
+            .style("margin-left", "40px")
+
+            .on("mouseover", function () {
+                d3.select(this).
+                    html("<b>Le Type de Prestations le Plus Demander</b>" + "<br>" + maxCountObject.description + "<br>"
+                        + "Avec" + "<br>" + maxCountObject.count + " Ventes")
+                    .transition()
+                    .duration(200)
+                    .ease(d3.easeLinear)
+                    .style("width", "320px")
+                    .style("height", "155px")
+                    .style("background-color", "#cccccc")
+                    .style("font-size", "16px")
+                    .style("font-weight", "bold")
+                    .style("line-height", "40px");
+            })
+            .on("mouseout", function () {
+                d3.select(this)
+                    .html("<b>Le Type de Prestations le Plus Demander</b>")
+                    .transition()
+                    .duration(200)
+                    .ease(d3.easeLinear)
+                    .style("background-color", "#838383")
+                    .style("width", "380px")
+                    .style("height", "60px")
+                    .style("font-weight", "normal")
+                    .style("font-size", "20px")
+                    .style("line-height", "55px");
+            })
+            .style("color", "#000000")
+            .style("font-size", "20px")
+            .style("text-align", "center")
+            .style("line-height", "55px");
+
+    })
+
+
+</script>
+
+</html>
