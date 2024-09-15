@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<Schema name="Sales">
+
+  <Cube name="Ventes" defaultMeasure="CA">
+
+    <Table name="Sales" />
+
+    <Dimension name="Date de debut" foreignKey="start_date_fk">
+
+      <Hierarchy name="Standard" hasAll="true" primaryKey="id">
+	<Table name="Dates" />
+	<Level name="Année" column="year" uniqueMembers="true" />
+	<Level name="Trimestre" column="quarter" />
+	<Level name="Nom mois" column="month_name" ordinalColumn="month_number" />
+	<Level name="Numéro mois" column="month_number" />
+	<Level name="Jour" column="day_number_within_month" />
+	<Level name="Nom jour" column="day_name" />
+	<Level name="Heure" column="hour" />
+	<Level name="Minutes" column="minute" />
+      </Hierarchy>
+
+      <!--<Hierarchy name="noStandard1" hasAll="true" primaryKey="id">
+	<Table name="Dates" />
+	<Level name="Heure" column="hour" />
+	<Level name="Minutes" column="minute" />
+      </Hierarchy>-->
+  
+    </Dimension>
+
+    <Dimension name="Date de fin" foreignKey="end_date_fk">
+      <Hierarchy name="Standard" hasAll="true" primaryKey="id">
+  <Table name="Dates" />
+	<Level name="Année" column="year" uniqueMembers="true" />
+	<Level name="Trimestre" column="quarter" />
+	<Level name="Nom mois" column="month_name" ordinalColumn="month_number" />
+	<Level name="Numéro mois" column="month_number" />
+	<Level name="Jour" column="day_number_within_month" />
+	<Level name="Nom jour" column="day_name" />
+	<Level name="Heure" column="hour" />
+	<Level name="Minutes" column="minute" />
+      </Hierarchy>
+
+      <!--<Hierarchy name="noStandard1" hasAll="true" primaryKey="id">
+	<Table name="Dates" />
+	<Level name="Heure" column="hour" />
+	<Level name="Minutes" column="minute" />
+      </Hierarchy>-->
+      
+    </Dimension>
+
+
+    <Dimension name="Clients" foreignKey="customer_fk">
+      <Hierarchy name="Standard" hasAll="true" primaryKey="client_num">
+  <Table name="Customers" />
+  <Level name="Nom Region" column="region_name" />
+  <Level name="Code Region" column="region_code" />
+  <Level name="Nom Departement" column="department_name" />
+  <Level name="Code Departement" column="department_code" />
+  <Level name="Ville" column="city_name" />
+  <Level name="Code Postal" column="zip_code" />
+  <Level name="Adresse" column="street_address" uniqueMembers="true" />
+  <Level name="Insee" column="insee_code" />
+	<Level name="Nom" column="last_name"/>
+	<Level name="Prenom" column="first_name" />
+      </Hierarchy>
+    </Dimension>
+
+
+    <Dimension name="Prestations" foreignKey="prestation_fk">
+      <Hierarchy name="Standard" hasAll="true" primaryKey="code">
+  <Table name="Prestations" />
+  <Level name="Category de Prestation" column="category" />
+	<Level name="Nom de Prestation" column="name"/>
+      </Hierarchy>
+    </Dimension>
+
+
+    <Dimension name="Lieux" foreignKey="city_fk">
+      <Hierarchy name="Standard" hasAll="true" primaryKey="id">
+  <Table name="Geography" />
+  <Level name="Nom Region" column="region_name" />
+  <Level name="Code Region" column="region_code" />
+  <Level name="Nom Departement" column="department_name"/>
+  <Level name="Code Departement" column="department_code" />
+  <Level name="Ville" column="city_name" uniqueMembers="true"/>
+	<Level name="Insee" column="insee_code"/>
+	<Level name="Code Postal" column="zip_code" />
+      </Hierarchy>
+    </Dimension>
+
+
+
+
+    <Measure name="CA" column="price" aggregator="sum" formatString="Standard" />
+
+    <Measure name="Num_V" column="id" aggregator="count" formatString="Standard" />
+
+    <Measure name="Prix moyen" column="price" aggregator="avg" formatString="Standard" />
+
+    <Measure name="Duree moyen" column="duration" aggregator="avg" formatString="Standard" />
+
+
+  </Cube>
+
+</Schema>

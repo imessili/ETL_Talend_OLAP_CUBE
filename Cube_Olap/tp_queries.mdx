@@ -1,0 +1,117 @@
+-- Realisé par: MESSILI Islem 22303045 et KHABBAZ Anas 22302264
+
+-- Le double tiret introduit met une ligne en commentaire. Décommenter l'une ou
+-- l'autre des requêtes ci-dessous pour la tester (en commentant les autres).
+
+-- Chiffre d'affaires par mois
+-- SELECT [Numéro mois].MEMBERS ON COLUMNS, [Measures].[CA] ON ROWS
+-- FROM Ventes
+
+-- Chiffre d'affaires cumulé sur les mois de janvier et février 2020
+-- SELECT [Measures].[CA] ON 0
+-- FROM Ventes
+-- WHERE ({[2020].[1].[janvier], [2020].[1].[février]})
+
+-- Chiffre d'affaires pour les mois de janvier et février 2020
+-- SELECT [Measures].[CA] ON 0, {[2020].[1].[janvier], [2020].[1].[février]} ON 1
+-- FROM Ventes
+
+--------------------------------------------------------------------------------
+
+-- Exercice 2:
+
+-- SELECT [Measures].[CA] ON 0 FROM Ventes
+
+---------------------------------------------------------------------------------
+
+-- Exercice 3:
+
+-- SELECT [Nom mois].MEMBERS ON COLUMNS, [Measures].[CA] ON ROWS FROM Ventes
+
+-----------------------------------------------------------------------------------
+
+-- Exercice 4:
+
+-- SELECT [Date de fin].[Nom mois].MEMBERS ON COLUMNS, [Measures].[CA] ON ROWS 
+-- FROM Ventes 
+-- WHERE {[Lieux].[Normandie], [Lieux].[Bretagne]}
+
+--------------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 5:
+
+-- SELECT [Nom mois], {[Lieux].[Normandie], [Lieux].[Bretagne]} ON ROWS 
+-- FROM Ventes 
+-- WHERE [Measures].[CA]
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 6:
+
+-- Observation : On remarque que les heures de travail s'étendent de 7h à 20h, et la majorité des ventes ont lieu au milieu de la journée,
+-- ce qui se traduit par un chiffre d'affaires plus élevé pendant cette période.
+-- Il faut Décommenter l'hiérarchie noStandard1.
+
+-- SELECT [noStandard1].[Heure].MEMBERS ON COLUMNS, {[Measures].[CA], [Measures].[Num_V]} ON ROWS
+-- FROM Ventes 
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 7:
+
+-- Observation : On constate que les ventes et le chiffre d'affaires 
+-- pendant les week-ends sont moins élevés que ceux enregistrés les autres jours de la semaine.
+
+-- SELECT [Standard].[Nom jour].MEMBERS ON COLUMNS, {[Measures].[CA], [Measures].[Num_V]} ON ROWS
+-- FROM Ventes 
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 7:
+
+-- Observation : Il est à noter que les régions à forte densité de population, telles que l'Île-de-France,
+-- enregistrent un nombre de ventes plus élevé, et une grande partie des transactions se concentre dans cette région.
+
+-- SELECT [Clients].[Standard].[Nom Region].MEMBERS ON COLUMNS, {[Measures].[Num_V]} ON ROWS
+-- FROM Ventes
+
+----------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 8:
+
+-- Observation : On peut noter qu'il existe des régions où il n'y a aucune vente.
+
+-- SELECT [Lieux].[Standard].[Nom Region].MEMBERS ON COLUMNS, {[Measures].[Num_V]} ON ROWS
+-- FROM Ventes
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 9:
+
+-- SELECT [Clients].[Standard].[Nom Departement].MEMBERS ON COLUMNS, {[Measures].[Num_V],[Measures].[Prix moyen]} ON ROWS
+-- FROM Ventes
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 10:
+
+-- SELECT {[2020].[1],[2020].[2],[2020].[3],[2020].[4]} ON COLUMNS, {[Measures].[Num_V],[Measures].[Duree moyen]} ON ROWS
+-- FROM Ventes
+-- WHERE ({[Lieux].[Normandie]})
+
+-- SELECT {[2020].[1],[2020].[2],[2020].[3],[2020].[4]} ON COLUMNS, {[Measures].[Num_V],[Measures].[Duree moyen]} ON ROWS
+-- FROM Ventes
+-- WHERE ([Lieux].[Hauts-de-France])
+
+---------------------------------------------------------------------------------------------------------------------
+
+-- Exercice 11:
+
+-- SELECT [Prestations].[Standard].[Category de Prestation].MEMBERS ON COLUMNS, {[Measures].[Duree moyen]} ON ROWS
+-- FROM Ventes
+
+-- SELECT {[Lieux].[Standard].[Nom Region].MEMBERS} ON COLUMNS, {[Measures].[Duree moyen]} ON ROWS
+-- FROM Ventes
+
+-- SELECT {[Trimestre].MEMBERS} ON COLUMNS, {[Measures].[Duree moyen]} ON ROWS
+-- FROM Ventes

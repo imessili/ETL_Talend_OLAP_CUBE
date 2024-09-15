@@ -1,0 +1,69 @@
+-- La table des FAIT_VENTES
+CREATE TABLE FAIT_VENTES (
+id_vente INTEGER NOT NULL PRIMARY KEY,
+key_client INTEGER NOT NULL REFERENCES DimClients(key_client),
+key_prestation INTEGER NOT NULL REFERENCES DimPrestation(key_prestation),
+key_lieu INTEGER NOT NULL REFERENCES DimLieux(key_lieu),
+key_date_debut INTEGER NOT NULL REFERENCES DimDates(key_date),
+key_date_fin INTEGER NOT NULL REFERENCES DimDates(key_date),
+duration INTEGER NOT NULL,
+prix REAL NOT NULL
+);
+
+-- La table DIMCLIENTS
+CREATE TABLE DIMCLIENTS (
+key_client INTEGER NOT NULL PRIMARY KEY,
+num_client TEXT NOT NULL,
+nom TEXT NOT NULL,
+prenom TEXT NOT NULL,
+adresse TEXT NOT NULL,
+code_postal TEXT NOT NULL,
+ville TEXT NOT NULL,
+department_code TEXT NOT NULL,
+department_nom TEXT NOT NULL,
+region_code TEXT NOT NULL,
+region_nom TEXT NOT NULL,
+active_flag TEXT NOT NULL,
+date_debut NULL,
+date_fin NULL
+);
+
+-- La table DIMPRESTATIONS
+CREATE TABLE DIMPRESTATION (
+key_prestation INTEGER NOT NULL PRIMARY KEY,
+code_prestation TEXT NOT NULL,
+nom_pr TEXT NOT NULL,
+categorie TEXT NOT NULL
+);
+
+-- La table DIMDATES
+CREATE TABLE DIMDATES (
+key_date INTEGER NOT NULL PRIMARY KEY,
+id_date TEXT NOT NULL,
+date_complete TEXT NOT NULL,
+annee INTEGER NOT NULL,
+trimestre INTEGER NOT NULL,
+mois INTEGER NOT NULL,
+nom_mois TEXT NOT NULL,
+jour_mois INTEGER NOT NULL,
+nom_jour TEXT NOT NULL,
+heure INTEGER NOT NULL,
+minute INTEGER NOT NULL
+);
+
+-- La table DIMLIEUX
+CREATE TABLE DIMLIEUX (
+key_lieu INTEGER NOT NULL PRIMARY KEY,
+id_lieu TEXT NOT NULL,
+ville TEXT NOT NULL,
+insee TEXT NOT NULL,
+code_postal TEXT NOT NULL,
+department_code TEXT NOT NULL,
+department_nom TEXT NOT NULL,
+region_code TEXT NOT NULL,
+region_nom TEXT NOT NULL
+);
+
+
+
+

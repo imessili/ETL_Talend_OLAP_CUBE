@@ -1,59 +1,23 @@
-CC3 Realisé par: MESSILI Islem 22303045 et KHABBAZ Anas 22302264
+Version Talend: 7.3.1
+Entrepôt utilisé pour le TP OLAP: basic_datawarehouse
 
-Le projet comprend une pile de containers permettant de lancer 
-une application de visualisation de données, en se concentrant 
-sur les données de ventes étudiées lors de la première phase ETL.
+Pour le projet Talend:
 
-La pile de containers comprend :
-- Une base de données MongoDB contenant les données de ventes.
-- Un serveur Apache.
-- Un container GraphQL contenant le code du serveur et les résolveurs.
+1-  Extraire le fichier tp_ETL.zip
 
-L'application permet de Visualiser:
-- La Répartition Géographique des Prestations par Departement et par Région.
-- Le Nombre de Ventes Total
-- La Répartition des Types de Prestations par Departement et par Région.
-- La Répartition Géographique des Clients par Departement et par Région.
-- Le Nombre de Clients Total
-- Le Chiffres d'affaires en Fonction des Années.
-- Le Chiffres d'affaires en Fonction des Mois.
-- La Répartition des Ventes par Jour de la Semaine.
-- La Répartition des Ventes par Heurs du Jour.
-- Les Ventes par Catégorie de Prestation.
+2-  Importer le projet sur Talend
 
-Notes:
-- Le zoom sur la page doit être réglé à 80% pour une meilleure visualisation.
-- Sur la page de la répartition géographique, vous pouvez cliquer sur les départements et les régions 
-  pour afficher plus d'informations.
-- Sélectionnez ou desélectionnez plusieurs départements ou régions pour voir le total.
+3-	Crée une base de données SQLite en exécutant la commande suivante : sqlite3 daraWareHouse.db
 
+4-	Exécuter les requêtes disponibles sur SQLqueries.txt afin de crée les tables de dimensions et la table des faits
 
-Instruction Pour lancer l'application:
+5-	Faites une connexion de base de données operational_db et dataWarehouse via la référentiels métadonnées
 
-Lancer la commande suivant pour lancer la pile docker:
-docker-compose -f stack.yml up -d
+6-	Faites un lien de fichier geography.csv, date.csv, prestation.csv via la référentiels métadonnées
 
-Lien de serveur MongoDB: 
-http://127.0.0.1:8081/
+7-	Lancer les jobs suivante afin d’alimenter entrepôt de données : Dim_Dates, Dim_Lieux, Dim_Prestations, Dim_Client_Insert et Fait_Ventes.
 
-Login : root
-Password : example 
+Pour le cube OLAP:
 
-
-Lancer la commande suivant pour charger les données sales.BSON dans le serveur MongoDB:
-docker exec -i mongo-dev sh -c 'mongoimport -d bda -c sales --authenticationDatabase admin -u root -p example' < sales.bson
-
-Lancer la commande suivant pour lancer le serveur Apache:
-node index.js
-
-Lien Pour lancer l'application:
-http://127.0.0.1
-
-Lien de serveur Apache:
-http://127.0.0.1:4000/
-
-Lien de serveur Apache Local:
-http://localhost:4000/
-
-Lancer la commande suivant pour fermer la pile docker:
-docker-compose -f stack.yml down
+1-  le schéma du cube (fichier xml): tp_schema.xml
+2-  Le fichier contenant les requêtes MDX: tp_queries.mdx
