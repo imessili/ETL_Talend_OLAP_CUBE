@@ -1,4 +1,3 @@
-CC3 Realisé par: MESSILI Islem 22303045 et KHABBAZ Anas 22302264
 
 Le projet comprend une pile de containers permettant de lancer 
 une application de visualisation de données, en se concentrant 
@@ -57,3 +56,71 @@ http://localhost:4000/
 
 Lancer la commande suivant pour fermer la pile docker:
 docker-compose -f stack.yml down
+
+
+# Sales Data Visualization Application
+
+This project includes a stack of containers designed to launch a data visualization application, focusing on sales data studied during the first phase of the ETL process.
+
+### The container stack includes:
+- **MongoDB database** containing the sales data.
+- **Apache server**.
+- **GraphQL container** with the server code and resolvers.
+
+### The application allows you to visualize:
+- **Geographic Distribution of Sales** by department and region.
+- **Total Number of Sales**.
+- **Distribution of Service Types** by department and region.
+- **Geographic Distribution of Customers** by department and region.
+- **Total Number of Customers**.
+- **Revenue by Year**.
+- **Revenue by Month**.
+- **Sales Distribution by Day of the Week**.
+- **Sales Distribution by Time of Day**.
+- **Sales by Service Category**.
+
+### Notes:
+- The page zoom should be set to **80%** for optimal visualization.
+- On the geographic distribution page, you can **click on departments and regions** to display more information.
+- **Select or deselect multiple departments or regions** to see the total.
+
+---
+
+## Instructions to Launch the Application:
+
+Run the following command to start the Docker stack:
+
+```bash
+docker-compose -f stack.yml up -d
+```
+
+### MongoDB Server Link:
+- URL: [http://127.0.0.1:8081/](http://127.0.0.1:8081/)
+- **Login**: root
+- **Password**: example
+
+To load the `sales.BSON` data into the MongoDB server, run:
+
+```bash
+docker exec -i mongo-dev sh -c 'mongoimport -d bda -c sales --authenticationDatabase admin -u root -p example' < sales.bson
+```
+
+To launch the Apache server, run:
+
+```bash
+node index.js
+```
+
+### Application URL:
+- [http://127.0.0.1](http://127.0.0.1)
+
+### Apache Server Links:
+- Apache Server: [http://127.0.0.1:4000/](http://127.0.0.1:4000/)
+- Local Apache Server: [http://localhost:4000/](http://localhost:4000/)
+
+To stop the Docker stack, run:
+
+```bash
+docker-compose -f stack.yml down
+```
+
