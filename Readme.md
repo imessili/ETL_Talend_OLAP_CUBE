@@ -1,61 +1,66 @@
+# Application de Visualisation des Données de Vente
 
-Le projet comprend une pile de containers permettant de lancer 
-une application de visualisation de données, en se concentrant 
-sur les données de ventes étudiées lors de la première phase ETL.
+Ce projet inclut une pile de containers conçue pour lancer une application de visualisation des données, en se concentrant sur les données de ventes étudiées lors de la première phase du processus ETL.
 
-La pile de containers comprend :
-- Une base de données MongoDB contenant les données de ventes.
-- Un serveur Apache.
-- Un container GraphQL contenant le code du serveur et les résolveurs.
+### La pile de containers comprend :
+- **Base de données MongoDB** contenant les données de ventes.
+- **Serveur Apache**.
+- **Container GraphQL** avec le code du serveur et les résolveurs.
 
-L'application permet de Visualiser:
-- La Répartition Géographique des Prestations par Departement et par Région.
-- Le Nombre de Ventes Total
-- La Répartition des Types de Prestations par Departement et par Région.
-- La Répartition Géographique des Clients par Departement et par Région.
-- Le Nombre de Clients Total
-- Le Chiffres d'affaires en Fonction des Années.
-- Le Chiffres d'affaires en Fonction des Mois.
-- La Répartition des Ventes par Jour de la Semaine.
-- La Répartition des Ventes par Heurs du Jour.
-- Les Ventes par Catégorie de Prestation.
+### L'application permet de visualiser :
+- **Répartition Géographique des Ventes** par département et par région.
+- **Nombre Total de Ventes**.
+- **Répartition des Types de Prestations** par département et par région.
+- **Répartition Géographique des Clients** par département et par région.
+- **Nombre Total de Clients**.
+- **Chiffre d'Affaires par Année**.
+- **Chiffre d'Affaires par Mois**.
+- **Répartition des Ventes par Jour de la Semaine**.
+- **Répartition des Ventes par Heure du Jour**.
+- **Ventes par Catégorie de Prestation**.
 
-Notes:
-- Le zoom sur la page doit être réglé à 80% pour une meilleure visualisation.
-- Sur la page de la répartition géographique, vous pouvez cliquer sur les départements et les régions 
-  pour afficher plus d'informations.
-- Sélectionnez ou desélectionnez plusieurs départements ou régions pour voir le total.
+### Notes :
+- Le zoom sur la page doit être réglé à **80%** pour une meilleure visualisation.
+- Sur la page de répartition géographique, vous pouvez **cliquer sur les départements et les régions** pour afficher plus d'informations.
+- **Sélectionnez ou désélectionnez plusieurs départements ou régions** pour voir le total.
 
+---
 
-Instruction Pour lancer l'application:
+## Instructions pour Lancer l'Application :
 
-Lancer la commande suivant pour lancer la pile docker:
-docker-compose -f stack.yml up -d
+Exécutez la commande suivante pour démarrer la pile Docker :
 
-Lien de serveur MongoDB: 
-http://127.0.0.1:8081/
+```bash
+docker-compose -f stack.yml up -d bash
+```
 
-Login : root
-Password : example 
+## Lien du Serveur MongoDB :
+- URL : http://127.0.0.1:8081/
+- Login : root
+- Mot de passe : example
 
-
-Lancer la commande suivant pour charger les données sales.BSON dans le serveur MongoDB:
+## Pour importer les données sales.BSON dans le serveur MongoDB, exécutez :
+```bash
 docker exec -i mongo-dev sh -c 'mongoimport -d bda -c sales --authenticationDatabase admin -u root -p example' < sales.bson
-
-Lancer la commande suivant pour lancer le serveur Apache:
+```
+Pour lancer le serveur Apache, exécutez :
+```bash
 node index.js
+```
 
-Lien Pour lancer l'application:
-http://127.0.0.1
+## URL de l'Application :
+- http://127.0.0.1
 
-Lien de serveur Apache:
-http://127.0.0.1:4000/
-
-Lien de serveur Apache Local:
-http://localhost:4000/
-
-Lancer la commande suivant pour fermer la pile docker:
+## Liens du Serveur Apache :
+- Serveur Apache : http://127.0.0.1:4000/
+- Serveur Apache Local : http://localhost:4000/
+- 
+Pour arrêter la pile Docker, exécutez :
+```bash
 docker-compose -f stack.yml down
+```
+
+---
 
 
 # Sales Data Visualization Application
@@ -123,4 +128,3 @@ To stop the Docker stack, run:
 ```bash
 docker-compose -f stack.yml down
 ```
-
